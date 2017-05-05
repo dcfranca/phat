@@ -302,9 +302,7 @@ class AutoTest(object):
 
             if format_url:
 
-                request_data = {'format_url': format_url}
-
-                URLUtils.prepare_request_data(global_options, item_options, request_data)
+                request_data = {'format_url': format_url, 'global_options': global_options, 'item_options': item_options}
 
                 PluginHelpers.run_method_for_each(
                     'prepare_request_data',
@@ -631,19 +629,36 @@ class URLUtils(object):
 
     @staticmethod
     def get_url_base(url):
-        return None
+        """
+        :param url: str
+        :return the base url when it' a .html page, otherwise None
+        """
+        protocol, url = url.split('://')
+        last_idx = len(url)
+
+        for idx2 in [m.start() for m in re.finditer('/', url)]:
+            last_idx = idx2
+
+        return '{0}://{1}'.format(protocol, url[0:last_idx])
 
     @staticmethod
     def format_url(link_url, base_url='', global_options={}, query_params=None):
 
+        if not base_url:
+            base_url = URLUtils.mount_domain_url(global_options)
+
         if link_url.startswith('http'):
             return link_url
+
+        # Trim leading/trailing dash
+        base_url = base_url.strip("/")
+        link_url = link_url.strip("/")
 
         return '{0}/{1}'.format(base_url, link_url)
 
     @staticmethod
     def mount_domain_url(global_options={}):
-        return ''
+        return 'http://test.invalid.domain.com'
 
     @staticmethod
     def similar_link_visited(link_url, links, fuzzy):
@@ -658,7 +673,15 @@ class URLUtils(object):
         return None
 
     @staticmethod
-    def prepare_request(format_url, global_options, item_options):
+    def prepare_request_data(global_options, item_options, args):
+        pass
+
+    @staticmethod
+    def prepare_request(args):
+        tmp = args.copy()
+        format_url = tmp.pop('format_url')
+        global_options = tmp.pop('global_options')
+        item_options = tmp.pop('item_options')
 
         format_url = format_url.replace('http:', 'https:') if item_options.get('use_https') else format_url
 

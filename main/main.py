@@ -216,18 +216,15 @@ def main():
         if 'HTTP_PROXY' in os.environ: del os.environ['HTTP_PROXY']
         if 'HTTPS_PROXY' in os.environ: del os.environ['HTTPS_PROXY']
 
-    # Retrieve all experients/variants data
-    experiments = options.experiments.split(',') if options.experiments and options.experiments.find(',') > -1 else [
-        options.experiments]
-    variants = options.variants.split(',') if options.variants and options.variants.find(',') > -1 else [
-        options.variants]
-
+    # # Retrieve all experients/variants data
+    # experiments = options.experiments.split(',') if options.experiments and options.experiments.find(',') > -1 else [
+    #     options.experiments]
+    # variants = options.variants.split(',') if options.variants and options.variants.find(',') > -1 else [
+    #     options.variants]
+    #
     dict_options = {k: v for k, v in vars(options).items() if v is not None}
 
     global_options.update(dict_options)
-
-    global_options['experiments'] = experiments
-    global_options['variants'] = variants
 
     start = time.time()
 
