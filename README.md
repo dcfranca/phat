@@ -97,14 +97,14 @@ Every other attribute is optional and depends on the plugins available.
 #Default Plugins
 ###*CompareURL*
 Plugin for testing if the response content of a http request is the similar to other one
-####How it works
+###How it works
     It looks for the property compare_url on the json item, this property is dictionary containing the url to compare and the fuzzy ratio you expect.
     This test only run in the case it finds this property
 
     You can define how similar the response contents might be using the property fuzzy in a float from 0-1
     0 = They can  be completely different
     1 = They must be exactly the same
-####Example
+###Example
 ```json
 {
  "url": "/relativepath/",
@@ -116,12 +116,12 @@ Plugin for testing if the response content of a http request is the similar to o
 ```
 ###*StatusCode*
 Plugin for testing the response status code of a HTTP request.
-####How it works
+###How it works
     It looks for the property status_codes on the json item, this property is an array of expected status codes.
     If nothing is assigned the default value is defined as:
     [200, 301, 302]
     This test always run    
-####Example
+###Example
 ```json
 {
    "url": "http://mydomain.com",
@@ -130,9 +130,9 @@ Plugin for testing the response status code of a HTTP request.
 ```
 ###*RunBrowser*
 Plugin that opens the url in the default browser
-####How it works
+###How it works
     It looks for the property run_browser on the json item, this property is a boolean, if the property is true it opens the url in a new tab in your default browser
-####Example
+###Example
 ```json
 {
  "url": "/checkme/",
@@ -141,9 +141,9 @@ Plugin that opens the url in the default browser
 ```
 ###*Regex*
 Plugin that checks if a list of regex expressions are in the response content of the http request.
-####How it works
+###How it works
     It looks for the property regex or not_regex on the json item, this property is a list of strings containing the regex expressions you want to find or not to find.
-####Example
+###Example
 ```json
 {
   "url": "/showmeanumber",
@@ -152,11 +152,11 @@ Plugin that checks if a list of regex expressions are in the response content of
 ```
 ###*FollowLinks*
 Plugin that follow the links on the page, looking for a 404 or 500 error
-####How it works
+###How it works
     It looks for the property follow_links  or follow_links_fast on the json item
     The property follow_links is a simple boolean indicating wether the tests should follow the links or not, in case it's true it'll follow all the links on the page and report any 404 or 500 error.
     The property follow_links_fast is a float similar to the fuzzy property of the CompareURLs plugin indicating how different the urls must be to go through them, in this case the tests can run much faster as it's not going through all the links, but only the ~different~ ones.
-####Example
+###Example
 ```json
 {
   "url": "/givemesomelinks",
@@ -165,7 +165,7 @@ Plugin that follow the links on the page, looking for a 404 or 500 error
 ```
 ###*Selenium*
 Plugin that allows to add Selenium tests to your test case
-####How it works
+###How it works
     It looks for the property selenium_steps on the json item, this property is a list of steps that can be performed by Selenium.
     You also can pass the --selenium-browser to the command line to choose the browser you want to run the tests (the default is phantomjs, but it works nicer with Firefox) 
     If you want to run against a Selenium grid you have to add the parameter --selenium-grid, i.e: http://localhost:4445/wd/hub
@@ -184,7 +184,7 @@ Plugin that allows to add Selenium tests to your test case
          current_url: Check if the current url is ==, contains, starstswith or the specific string
          wait: An integer indicating the number of seconds to wait until the next step      
          contains_regex:  Indicating if the selected element must contains a specific regex expression          
-####Example
+###Example
 ```json
 [
   {
@@ -268,7 +268,7 @@ Plugin that allows to add Selenium tests to your test case
 ```
 ###*JSONApi*
 Plugin that allows to add json api tests to your test case
-####How it works
+###How it works
     It looks for the property json_path on the json item, this property is a dictionary with json paths to match and what to do with those matches
     Each match can be evaluated using one of those operators:
     
@@ -283,7 +283,7 @@ Plugin that allows to add json api tests to your test case
     Array operators (those operators apply over an array of results from the json path)
     length_==, length_!=, length_>, length_<, length_>=, length_<=, any_==, any_!=, any_>, any_>=, any_<, any_<=
     By the default the regular operators apply to all elements found that match the json path, and will report any error found, except if you use one of the any_ operators, in that case it'll fail only if none of the items comparison match.
-####Example
+###Example
 ```json
 [
   {
@@ -349,12 +349,12 @@ Plugin that allows to add json api tests to your test case
 ```
 ###*TimeMe*
 Plugin that checks if a request is taking longer than expected
-####How it works
+###How it works
     It looks for the property timeme on the json item, this property is an object with the those possible properties:
     requests: Number of requests to perform (default to 5)
     limit_max: Limit for the maximum request time (in seconds)
     limit_avg: Limit for the average request time (in seconds)
-####Example
+###Example
 ```json
 {
   "url": "/myslowpage",
@@ -368,14 +368,14 @@ Plugin that checks if a request is taking longer than expected
 
 ###*JUnit*
 Plugin to generate a JUnit format file output, so it can be integrated with JUnit tools, i.e: Jenkins
-####How it works
+###How it works
     To use it you just need to pass the argument -J <filename> to the command line
     -J JUNIT_FILENAME, --junit-file=JUNIT_FILENAME
     The JUnit format file to output with your results
 
 ###*HTMLoutput*
 Plugin to generate a HTML format file output, and open it in a browser for a nicer visualization of the results
-####How it works
+###How it works
     To use it you just need to pass the argument -H <filename> to the command line
     -H HTML_FILENAME, --html-file=HTML_FILENAME
     The HTML format file to output with your results
