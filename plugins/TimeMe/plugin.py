@@ -1,4 +1,3 @@
-from common.core import register_plugin
 from common.core import AbstractPlugin
 from common.core import classReplacements
 from functools import reduce
@@ -8,7 +7,6 @@ import timeit
 URLUtils = classReplacements.get_class('URLUtils')
 
 
-@register_plugin
 class TimeMePlugin(AbstractPlugin):
 
     def should_run(self):

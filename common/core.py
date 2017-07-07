@@ -201,6 +201,7 @@ class AutoTest(object):
                 else:
                     loaded_items.append(module)
 
+        #TODO: Return the classes instead of modules
         return loaded_items
 
     @staticmethod
