@@ -187,12 +187,13 @@ class AutoTest(object):
         for path in paths:
             if path not in sys.path:
                 sys.path.append(path)
-        
+      
         logger.debug("Loading {}s from {}: ".format(kind, paths))
         loaded_items = []
-
+        
         for _, name, ispkg in pkgutil.walk_packages(path=paths):
             logger.debug("Loading {}: {}".format(kind, name))
+
             if ispkg:
                 try:
                     module = importlib.import_module('{}.{}'.format(name, kind))
@@ -201,7 +202,7 @@ class AutoTest(object):
                 else:
                     loaded_items.append(module)
 
-        #TODO: Return the classes instead of modules
+        # TODO: Return the classes instead of modules
         return loaded_items
 
     @staticmethod

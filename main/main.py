@@ -138,7 +138,7 @@ def test():
     ut_modules = AutoTest.load_ut_classes()
     suite = unittest.TestSuite()
     for module in ut_modules:
-        classes = [cls for cls in dir(module) if cls.endswith('TestCase') and cls != "BaseTestCase"]
+        classes = [name for name in dir(module) if name.endswith('TestCase') and name != "BaseTestCase"]
         for name in classes:
             cls = module.__dict__[name]
             suite.addTests(unittest.defaultTestLoader.loadTestsFromTestCase(cls))
