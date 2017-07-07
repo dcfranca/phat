@@ -1,9 +1,7 @@
-from common.core import register_plugin
 from common.core import AbstractPlugin
 from common.core import logger
 
 
-@register_plugin
 class StatusCodePlugin(AbstractPlugin):
 
     status_codes = [200, 301, 302]

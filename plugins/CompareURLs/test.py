@@ -1,10 +1,8 @@
-from common.core import register_ut
 from common.core import BaseTestCase
 from common.core import AutoTest
 import responses
 
 
-@register_ut
 class CompareURLsTestCase(BaseTestCase):
 
     @responses.activate

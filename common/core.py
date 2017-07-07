@@ -125,15 +125,6 @@ def store_var(name, value):
     STORED_VARS[name] = value
     return True
 
-class Plugins(object):
-    def __init__(self):
-        self.registry = {}
-
-
-class UTClasses(object):
-    def __init__(self):
-        self.registry = []
-
 
 class ClassReplacements(object):
     def __init__(self):
@@ -146,15 +137,7 @@ class ClassReplacements(object):
         return self.registry[name] if name in self.registry else None
 
 
-plugins = Plugins()
-ut_classes = UTClasses()
 classReplacements = ClassReplacements()
-
-
-# Decorator to register plugin
-def register_plugin(cls):
-    plugins.registry[cls.__name__] = cls
-    return cls
 
 
 # Decorator to register class replacement
@@ -164,12 +147,6 @@ def register_replacement(name):
         return cls
 
     return wrap
-
-
-# Decorator to register UT class
-def register_ut(cls):
-    ut_classes.registry.append(cls)
-    return cls
 
 
 class AutoTest(object):
@@ -196,22 +173,33 @@ class AutoTest(object):
         self.run_log = []
 
     @staticmethod
-    def load_classes(kind):
+    def load_classes(kind: str):
         import pkgutil
-        path = os.path.join(os.path.dirname(__file__), "..", "plugins")
-        logger.debug("Loading {0}s from {1}: ".format(kind, path))
+        import importlib
+        paths = []
+        paths.append(os.path.join(os.path.dirname(__file__), "..", "plugins"))
+        
+        extra_path = os.getenv('PHAT_EXTRA_PLUGINS_DIR')
+        if extra_path:
+            extra_path = os.path.join(extra_path, "plugins")
+            paths.append(extra_path)
+
+        for path in paths:
+            if path not in sys.path:
+                sys.path.append(path)
+        
+        logger.debug("Loading {}s from {}: ".format(kind, paths))
         loaded_items = []
 
-        for module_finder, name, ispkg in pkgutil.walk_packages(path=[path]):
-
-            logger.debug("Loading {0}: {1}".format(kind, name))
+        for _, name, ispkg in pkgutil.walk_packages(path=paths):
+            logger.debug("Loading {}: {}".format(kind, name))
             if ispkg:
                 try:
-                    exec("from plugins.{0}.{1} import *".format(name, kind))
-                except ImportError:
+                    module = importlib.import_module('{}.{}'.format(name, kind))
+                except ImportError as ex:
                     logger.debug("Error importing module: {0} of kind: {1}".format(name, kind))
                 else:
-                    loaded_items.append(name)
+                    loaded_items.append(module)
 
         return loaded_items
 
@@ -316,7 +304,14 @@ class AutoTest(object):
                 format_url = request_data['format_url']
 
                 # Run the test itself
-                for cls in plugins.registry.values():
+                plugins_classes = []
+                for module in plugins:
+                    plugins_names = [name for name in dir(module) if name.endswith('Plugin') and name != "AbstractPlugin"]
+                    for name in plugins_names:
+                        cls = module.__dict__[name]
+                        plugins_classes.append(cls)
+                    
+                for cls in plugins_classes:
                     cls.on_before_tests()
                 try:
                     requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
@@ -349,7 +344,7 @@ class AutoTest(object):
                         'failures': [],
                     }
 
-                for name, cls in plugins.registry.items():
+                for cls in plugins_classes:
                     c = cls(format_url, global_options, item_options, response)
                     cls.on_before_tests()
                     if c.should_run():
@@ -365,7 +360,7 @@ class AutoTest(object):
                             test_errors.append(e)
                             print(u"\N{WARNING SIGN}", end="", flush=True)
 
-                for cls in plugins.registry.values():
+                for cls in plugins_classes:
                     cls.on_after_tests()
 
                 status = 'PASS'
@@ -412,7 +407,7 @@ class PluginHelpers(object):
     @staticmethod
     def run_method_for_each(method_name, *args, **kwargs):
         instances = kwargs.pop('instances', None)
-        values = instances if instances else plugins.registry.values()
+        values = instances if instances else plugins
         for item in values:
             method = getattr(item, method_name, None)
             if callable(method):
@@ -545,6 +540,9 @@ class AbstractPlugin(object):
         pass
 
 
+plugins = []
+
+
 class BaseTestCase(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
@@ -552,7 +550,8 @@ class BaseTestCase(unittest.TestCase):
 
     @classmethod
     def setUpClass(self):
-        AutoTest.load_plugins()
+        global plugins
+        plugins = AutoTest.load_plugins()
 
     def run_test_suite(self, tests_suite={}, global_options={}):
         bt = AutoTest(global_options)
@@ -670,7 +669,7 @@ class URLUtils(object):
 
     @staticmethod
     def get_custom_username(global_options):
-        return None
+        return ''
 
     @staticmethod
     def prepare_request_data(global_options, item_options, args):

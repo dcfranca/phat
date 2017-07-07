@@ -1,4 +1,3 @@
-from common.core import register_plugin
 from common.core import AbstractPlugin
 from common.core import logger
 from bs4 import BeautifulSoup, SoupStrainer
@@ -8,7 +7,6 @@ import requests
 import concurrent.futures
 
 
-@register_plugin
 class FollowLinksPlugin(AbstractPlugin):
 
     fast = False

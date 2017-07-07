@@ -1,4 +1,3 @@
-from common.core import register_plugin
 from common.core import AbstractPlugin
 from common.core import logger
 from common.core import replace_vars
@@ -21,6 +20,7 @@ OPERATORS = {
 
 # RPM installation will change this to True if detects firefox 46+
 USE_MARIONETTE = False
+
 
 def get_firefox_driver(path = None, selenium_grid_hub = None, no_proxy=False):
 
@@ -66,7 +66,6 @@ def get_phantomjs_driver(path=None, selenium_grid_hub = None, no_proxy=False):
         return webdriver.PhantomJs()
 
 
-@register_plugin
 class SeleniumPlugin(AbstractPlugin):
 
     sequential_testing_lock = threading.Lock()

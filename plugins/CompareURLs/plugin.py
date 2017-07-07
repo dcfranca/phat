@@ -1,12 +1,11 @@
 import requests
-from common.core import register_plugin
 from common.core import AbstractPlugin
 from common.core import logger
 from requests.auth import HTTPBasicAuth
 from Levenshtein import ratio
 from typing import Dict
 
-@register_plugin
+
 class CompareURLsPlugin(AbstractPlugin):
     """
     Compare a url to another

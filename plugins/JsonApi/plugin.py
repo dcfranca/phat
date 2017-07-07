@@ -1,4 +1,3 @@
-from common.core import register_plugin
 from common.core import AbstractPlugin
 from common.core import logger
 from common.core import store_var
@@ -81,7 +80,6 @@ OPTIONS = {
 }
 
 
-@register_plugin
 class JsonApiPlugin(AbstractPlugin):
 
     def should_run(self):

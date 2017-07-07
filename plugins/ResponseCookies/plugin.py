@@ -1,4 +1,3 @@
-from common.core import register_plugin
 from common.core import AbstractPlugin
 from common.core import logger
 from common.core import store_var, replace_vars
@@ -20,7 +19,6 @@ ACTIONS = {
 }
 
 
-@register_plugin
 class HTTPResponseCookiePlugin(AbstractPlugin):
 
     def should_run(self):

@@ -1,10 +1,8 @@
-from common.core import register_plugin
 from common.core import AbstractPlugin
 from common.core import logger
 import re
 
 
-@register_plugin
 class RegexPlugin(AbstractPlugin):
 
     regex = []

@@ -1,10 +1,9 @@
-from common.core import register_plugin
 from common.core import AbstractPlugin
 from common.core import logger
 import webbrowser
 import os
 
-@register_plugin
+
 class HTMLPlugin(AbstractPlugin):
 
     @staticmethod

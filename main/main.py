@@ -8,7 +8,6 @@ from requests.auth import HTTPBasicAuth
 import sys
 import os
 
-from common.core import ut_classes
 from common.core import classReplacements
 from common.core import logger
 from common.core import PluginHelpers
@@ -136,10 +135,13 @@ class TestURLUtils(object):
 
 def test():
     import unittest
-    AutoTest.load_ut_classes()
+    ut_modules = AutoTest.load_ut_classes()
     suite = unittest.TestSuite()
-    for cls in ut_classes.registry:
-        suite.addTests(unittest.defaultTestLoader.loadTestsFromTestCase(cls))
+    for module in ut_modules:
+        classes = [cls for cls in dir(module) if cls.endswith('TestCase') and cls != "BaseTestCase"]
+        for name in classes:
+            cls = module.__dict__[name]
+            suite.addTests(unittest.defaultTestLoader.loadTestsFromTestCase(cls))
 
     unittest.TextTestRunner().run(suite)
 

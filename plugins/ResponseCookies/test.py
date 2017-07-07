@@ -1,9 +1,7 @@
-from common.core import register_ut
 from common.core import BaseTestCase
 import responses
 
 
-@register_ut
 class ResponseCookiesTestCase(BaseTestCase):
 
     @responses.activate

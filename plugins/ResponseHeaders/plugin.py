@@ -1,10 +1,9 @@
-from common.core import register_plugin
 from common.core import AbstractPlugin
 from common.core import logger
 from common.core import store_var, replace_vars
 import re
 
-@register_plugin
+
 class HTTPResponseHeaderPlugin(AbstractPlugin):
 
     def should_run(self):
