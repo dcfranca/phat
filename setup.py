@@ -12,8 +12,8 @@ setup(name='PHAT',
       version=VERSION,
       description='Pluggable HTTP Auto Testing',
       author='Daniel Franca',
-      author_email='daniel.franca@gmail.com',
+      url='https://github.com/danielfranca/phat',
+      license='MIT',
       packages=pkgs,
       install_requires=['python-Levenshtein==0.11.2', 'beautifulsoup4==4.4.1', 'requests==2.4.0', 'paramiko==1.15.2', 'jsonpath-rw==1.4.0', 'selenium==2.53.2', 'responses==0.5.1'],
-      scripts=['phat', 'settings.py'],
-)
+      scripts=['phat', 'settings.py'],)
