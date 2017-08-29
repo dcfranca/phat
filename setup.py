@@ -8,7 +8,7 @@ plugins = AutoTest.load_plugins()
 
 pkgs = ['plugins.' + pl.__name__.split('.')[0] for pl in plugins] + ['main', 'common']
 
-setup(name='PHAT',
+setup(name='phat-tool',
       version=VERSION,
       description='Pluggable HTTP Auto Testing',
       author='Daniel Franca',

@@ -32,7 +32,9 @@ python setup.py install
 If you have any aditional plugins, you can add the plugins directory setting the environment variable `PHAT_EXTRA_PLUGINS_DIR`
 For ex: if you have more plugins under *'<my_path>/plugins_dir/plugins'* you should set `PHAT_EXTRA_PLUGINS_DIR` to *'<my_path>/plugins_dir'*
 
-**pip:** coming soon
+**pip:**
+
+Just run `pip install phat-tool`
 
 
 # Basic Usage
