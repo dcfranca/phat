@@ -80,7 +80,7 @@ Options:
 Additional switches depend on the set of plugins currently available.
 
 The file required to run is a json file follows this structure:
-
+```json
 [
   {
     "url": "/path/"
@@ -97,6 +97,7 @@ The file required to run is a json file follows this structure:
     "run_browser": true
   }
 ]
+```
 
 Each item of the array of the json is required to contain a url
 property, this url can use a relative or absolute path, if it’s a
