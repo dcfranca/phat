@@ -6,7 +6,7 @@ from main.main import AutoTest
 
 plugins = AutoTest.load_plugins()
 
-pkgs = ['plugins.' + pl for pl in plugins] + ['main', 'common']
+pkgs = ['plugins.' + pl.__name__.split('.')[0] for pl in plugins] + ['main', 'common']
 
 setup(name='PHAT',
       version=VERSION,
