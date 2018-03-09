@@ -26,6 +26,8 @@ FORMAT = '%(asctime)-15s %(message)s'
 logging.basicConfig(format=FORMAT)
 logger = logging.getLogger('autotest')
 
+plugins = []
+
 
 class DictionaryWithTimeout(collections.MutableMapping):
     """A multi-threaded dictionary that reorders writes after reads.
@@ -211,7 +213,9 @@ class AutoTest(object):
 
     @staticmethod
     def load_plugins():
-        return AutoTest.load_classes('plugin')
+        global plugins
+        plugins = AutoTest.load_classes('plugin')
+        return plugins
 
     def get_username(self):
         custom_username = URLUtils.get_custom_username(self.global_options)
@@ -541,8 +545,6 @@ class AbstractPlugin(object):
         """
         pass
 
-
-plugins = []
 
 
 class BaseTestCase(unittest.TestCase):
