@@ -101,6 +101,9 @@ class TestURLUtils(object):
         if 'headers' in global_options:
             headers.update(global_options['headers'])
 
+        if 'headers' in item_options:
+            headers.update(item_options['headers'])
+
         global_options['headers'] = headers
         global_options['cookies'] = cookies
 
