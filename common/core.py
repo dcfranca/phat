@@ -691,6 +691,12 @@ class URLUtils(object):
         headers = global_options['headers'] = global_options.get('headers', {})
         cookies = global_options['cookies'] = global_options.get('cookies', {})
 
+        if 'headers' in item_options:
+            headers.update(item_options['headers'])
+
+        if 'cookies' in item_options:
+            cookies.update(item_options['cookies'])
+
         http_method = item_options.get('method', 'get').lower()
 
         data = item_options.get('data', {})
@@ -700,7 +706,7 @@ class URLUtils(object):
         username = global_options.get('username', None)
         password = global_options.get('password', None)
 
-        if global_options['headers']:
+        if headers:
             args['headers'] = replace_vars(headers)
         if username and password:
             args['auth'] = HTTPBasicAuth(username, password)
