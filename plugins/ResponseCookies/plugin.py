@@ -19,7 +19,7 @@ ACTIONS = {
 }
 
 
-class HTTPResponseCookiePlugin(AbstractPlugin):
+class ResponseCookiesPlugin(AbstractPlugin):
 
     def should_run(self):
         return 'response_cookies' in self.item_options and self.item_options['response_cookies']

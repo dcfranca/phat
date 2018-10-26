@@ -4,7 +4,7 @@ import webbrowser
 import os
 
 
-class HTMLPlugin(AbstractPlugin):
+class HTMLoutputPlugin(AbstractPlugin):
 
     @staticmethod
     def add_global_options(parser):

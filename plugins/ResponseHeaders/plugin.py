@@ -4,7 +4,7 @@ from common.core import store_var, replace_vars
 import re
 
 
-class HTTPResponseHeaderPlugin(AbstractPlugin):
+class ResponseHeadersPlugin(AbstractPlugin):
 
     def should_run(self):
         return 'response_headers' in self.item_options and self.item_options['response_headers']

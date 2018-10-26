@@ -415,9 +415,12 @@ class PluginHelpers(object):
         instances = kwargs.pop('instances', None)
         values = instances if instances else plugins
         for item in values:
-            method = getattr(item, method_name, None)
-            if callable(method):
-                method(*args, **kwargs)
+            cls_name = item.__name__.split('.')[0] + 'Plugin'
+            cls = getattr(item, cls_name)
+            if cls:
+                method = getattr(cls, method_name, None)
+                if callable(method):
+                    method(*args, **kwargs)
 
 
 class AbstractPlugin(object):

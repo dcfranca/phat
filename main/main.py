@@ -1,6 +1,8 @@
-import responses
 import re
-from Levenshtein import ratio
+try:
+   from Levenshtein import ratio
+except:
+   ratio = lambda x, y: 1
 from optparse import OptionParser
 from settings import VERSION
 from requests.auth import HTTPBasicAuth
